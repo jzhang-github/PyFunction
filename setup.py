@@ -30,8 +30,8 @@ setup(name='zjpf',
       url='https://github.com/jzhang-github/PyFunction',
       install_requires=['numpy',
                         'scipy'],
-      license='GPL',
-      packages=find_packages(),
+      license='MIT',
+      packages=find_packages('zjpf'),
       platforms=["all"],
       classifiers=[
                 # How mature is this project? Common values are
