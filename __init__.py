@@ -10,4 +10,4 @@ __version__ = '0.0.0'
 from .f import *
 
 # remove redundant variables from the global memory.
-del np, math, RGI
+# del np, math, RGI
