@@ -20,7 +20,7 @@ import zjpf as pf
 print(dir(pf))
 ```
 
-**This is not a user-oriented software package (personal use only), contact ZHANG Jun if you want to know how to use this repo**
+- **This is not a user-oriented software package (personal use only), contact ZHANG Jun if you want to know how to use this repo**
 
-**该项目不面向用户，仅供开发者个人使用。若您想了解本项目功能和用法，可联系张俊。**
+- **该项目不面向用户，仅供开发者个人使用。若您想了解本项目功能和用法，可联系张俊。**
 
