@@ -9,10 +9,18 @@ Useful Python functions.
 # PyPi
 **Z**HANG **J**un **P**ython **f**unctions (zjpf).
 
-### Use this repo
+# Install
+```console
+pip install zjpf
+```
+
+# Use this repo
 ```python
 import zjpf as pf
 print(dir(pf))
 ```
 
-### This is a personal package.
+**This is not a user-oriented software package (personal use only), contact ZHANG Jun if you want to know how to use this repo**
+
+**该项目不面向用户，仅供开发者个人使用。若您想了解本项目功能和用法，可联系张俊。**
+
