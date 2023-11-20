@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import os
 from scipy.interpolate import RegularGridInterpolator as RGI
 
 def read_chg(CHG_NAME='CHGCAR'):
