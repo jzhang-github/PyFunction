@@ -203,18 +203,19 @@ def get_centroid(fcoords, ref_pos, cutoff=0.5, convergence=0.00001):
     centroid_tmp = np.sum(fcoords_tmp, axis=0) / num_coord
     return centroid_tmp
     
-def get_dos(index_list):
-    dos_up_all, dos_dn_all = [], []
-    for i in index_list:
-        assert os.path.exists('DOS'+str(i)), 'DOS'+str(i)+" not found."
-        dos_tmp = np.loadtxt('DOS'+str(i))
-        dos_up_all.append(np.sum(dos_tmp[:,orbital_dict['d'][0]], axis=1))
-        dos_dn_all.append(np.sum(dos_tmp[:,orbital_dict['d'][1]], axis=1))
-    energy = dos_tmp[:,0]
-    dos_up = np.sum(dos_up_all, axis=0)
-    dos_dn = np.sum(dos_dn_all, axis=0)
-    dos    = np.array([energy, dos_up, dos_dn])
-    return dos
+# def get_dos(index_list):
+#     orbital_dict = {'s': [], 'p': [], 'd':[]}
+#     dos_up_all, dos_dn_all = [], []
+#     for i in index_list:
+#         assert os.path.exists('DOS'+str(i)), 'DOS'+str(i)+" not found."
+#         dos_tmp = np.loadtxt('DOS'+str(i))
+#         dos_up_all.append(np.sum(dos_tmp[:,orbital_dict['d'][0]], axis=1))
+#         dos_dn_all.append(np.sum(dos_tmp[:,orbital_dict['d'][1]], axis=1))
+#     energy = dos_tmp[:,0]
+#     dos_up = np.sum(dos_up_all, axis=0)
+#     dos_dn = np.sum(dos_dn_all, axis=0)
+#     dos    = np.array([energy, dos_up, dos_dn])
+#     return dos
     
 INCAR_TAG = '''
 SYSTEM
