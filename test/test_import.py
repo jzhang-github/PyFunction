@@ -1,1 +1,1 @@
-from .f import *
+from f import *
