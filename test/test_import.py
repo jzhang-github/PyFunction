@@ -1,1 +1,1 @@
-from zjpy import *
+from .f import *
