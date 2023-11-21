@@ -8,7 +8,7 @@ Created on Tue Jul 11 13:22:58 2023
 from distutils.core import setup
 from setuptools import find_packages
 
-with open("README.md", "r") as f:
+with open("README.md", "r", encoding='utf-8') as f:
   long_description = f.read()
 
 # print(long_description)
@@ -19,8 +19,8 @@ with open("README.md", "r") as f:
 # long_description = (this_directory / "README.md").read_text()
 
 setup(name='zjpf',
-      version='0.0.2',
-      python_requires='>=3.10',
+      version='0.0.1',
+      python_requires='>=3.1',
       description='ZHANG Jun Python functions.',
       long_description=long_description,
       include_package_data=True,
@@ -31,7 +31,7 @@ setup(name='zjpf',
       install_requires=['numpy',
                         'scipy'],
       license='MIT',
-      packages=find_packages('zjpf'),
+      packages=find_packages(),
       platforms=["all"],
       classifiers=[
                 # How mature is this project? Common values are
