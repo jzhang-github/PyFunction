@@ -114,6 +114,13 @@ def get_con_dict_from_ase(atoms):
     con = [x/num for x in counts]
     return dict(zip(ele, con))
 
+def get_concentration_from_ase_formula(formula):
+    f_dict = Formula(formula).count()
+    tot = np.sum(list(f_dict.values()))
+    c_dict = {k: v/tot for k, v in f_dict.items()}
+    c_dict = {k:c_dict[k] for k in c_dict if c_dict[k] > 0}
+    return c_dict
+
 def get_cutoff(atoms, crystal='FCC'):
     cell_volume    = atoms.get_volume()
     number_of_atoms = len(atoms)
