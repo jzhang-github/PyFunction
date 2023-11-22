@@ -2,6 +2,8 @@ import numpy as np
 import math
 import os
 from scipy.interpolate import RegularGridInterpolator as RGI
+import ase
+from ase.formula import Formula
 
 def read_chg(CHG_NAME='CHGCAR'):
     infile=open(CHG_NAME,"r")
