@@ -7,7 +7,7 @@ Useful Python functions.
 [![PyPI - Wheel](https://img.shields.io/pypi/wheel/zjpf)](https://pypi.org/project/zjpf/)
 
 # PyPi
-**Z**HANG **J**un **P**ython **f**unctions (zjpf).
+**Z**HANG **J**un **P**ython **f**unctions ([zjpf](https://pypi.org/project/zjpf/)).
 
 # Install
 ```console
