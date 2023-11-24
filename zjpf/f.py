@@ -11,7 +11,7 @@ def read_chg(CHG_NAME='CHGCAR'):
     #outfile2=open("mymag","w")
     #outfile3=open("myCHGt","w")
     #outfile4=open("myslice","w")
-    
+
     comment=infile.readline()
     A=float(infile.readline().split()[0])
     a=np.array([float(x) for x in infile.readline().split()])
@@ -22,30 +22,30 @@ def read_chg(CHG_NAME='CHGCAR'):
     lz=A*np.sqrt(c[0]**2+c[1]**2+c[2]**2)
     vol=A*A*A*np.dot(np.cross(a,b),c)
     #print(lx,ly,lz,vol)
-    
+
     #label=np.array([infile.readline().split()])
     label=np.array([str(x) for x in infile.readline().split()])
     #print(label)
     ntype=np.array([int(x) for x in infile.readline().split()])
     #print(ntype)
-    
+
     N=np.sum(ntype)
     #print(N)
-    
+
     dc=infile.readline()
-    
+
     pos=[]
     for i in range(1,N+1):
       pos.append([float(x) for x in infile.readline().split()])
     #print("Number of positions being read", len(pos))
-    
+
     tmp=infile.readline()
     (nx,ny,nz)=infile.readline().split()
     nx=int(nx)
     ny=int(ny)
     nz=int(nz)
     #print(nx,ny,nz)
-    
+
     chgtot = np.fromfile(infile, count=nx*ny*nz, sep=' ')
     chgtot2 = np.reshape(chgtot, (nx,ny,nz), order='F')
     sumt=sum(chgtot)
@@ -89,7 +89,7 @@ def flatten_new(arr:np.array, points=50):
         new_arr_tmp = np.mean(arr_tmp, axis=0)
         results.append(new_arr_tmp)
     return np.array(results)
-    
+
 def fractional2cartesian(vector_tmp, D_coord_tmp):
     C_coord_tmp = np.dot(D_coord_tmp, vector_tmp)
     return C_coord_tmp
@@ -139,7 +139,7 @@ def get_atom_index_in_layer(atoms, layer_index, layer_num): # begain from zero.
     lo_boundary = layer_index * average_spacing - average_spacing / 2
     hi_boundary = layer_index * average_spacing + average_spacing / 2
     return np.where((z > lo_boundary) & (z < hi_boundary))[0]
-    
+
 def shift_fcoords2(fcoord1, fcoord2, cutoff=0.5):
     """ Relocate fractional coordinate to the image of reference point. ``fcoord1`` is the reference point.
 
@@ -211,21 +211,28 @@ def get_centroid(fcoords, ref_pos, cutoff=0.5, convergence=0.00001):
 
     centroid_tmp = np.sum(fcoords_tmp, axis=0) / num_coord
     return centroid_tmp
-    
-# def get_dos(index_list):
-#     orbital_dict = {'s': [], 'p': [], 'd':[]}
-#     dos_up_all, dos_dn_all = [], []
-#     for i in index_list:
-#         assert os.path.exists('DOS'+str(i)), 'DOS'+str(i)+" not found."
-#         dos_tmp = np.loadtxt('DOS'+str(i))
-#         dos_up_all.append(np.sum(dos_tmp[:,orbital_dict['d'][0]], axis=1))
-#         dos_dn_all.append(np.sum(dos_tmp[:,orbital_dict['d'][1]], axis=1))
-#     energy = dos_tmp[:,0]
-#     dos_up = np.sum(dos_up_all, axis=0)
-#     dos_dn = np.sum(dos_dn_all, axis=0)
-#     dos    = np.array([energy, dos_up, dos_dn])
-#     return dos
-    
+
+orbital_dict = {
+                's':  [[1],[2]],
+                'p':  [[3,5,7],[4,6,8]],
+                'd':  [[9,11,13,15,17],[10,12,14,16,18]],
+                'pd': [[9],[11],[13],[15],[17],[10],[12],[14],[16],[18]],
+                }
+
+def get_dos(index_list):
+    orbital_dict = {'s': [], 'p': [], 'd':[]}
+    dos_up_all, dos_dn_all = [], []
+    for i in index_list:
+        assert os.path.exists('DOS'+str(i)), 'DOS'+str(i)+" not found."
+        dos_tmp = np.loadtxt('DOS'+str(i))
+        dos_up_all.append(np.sum(dos_tmp[:,orbital_dict['d'][0]], axis=1))
+        dos_dn_all.append(np.sum(dos_tmp[:,orbital_dict['d'][1]], axis=1))
+    energy = dos_tmp[:,0]
+    dos_up = np.sum(dos_up_all, axis=0)
+    dos_dn = np.sum(dos_dn_all, axis=0)
+    dos    = np.array([energy, dos_up, dos_dn])
+    return dos
+
 INCAR_TAG = '''
 SYSTEM
 ISTART
@@ -341,7 +348,7 @@ def pad_dict_list(dict_list, padel=np.nan):
         if  ll < lmax:
             dict_list[lname] += [padel] * (lmax - ll)
     return dict_list
-    
+
 def get_density(fname='POSCAR'):
     from ase.io import read
 
