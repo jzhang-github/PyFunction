@@ -14,6 +14,13 @@ Useful Python functions.
 pip install zjpf
 ```
 
+# Install from the source (latest version)
+- Download the source code: [download](https://github.com/jzhang-github/PyFunction/archive/refs/heads/main.zip)  
+```console
+python setup.py build
+python setup.py install
+```
+
 # Use this repo
 ```python
 import zjpf as pf
