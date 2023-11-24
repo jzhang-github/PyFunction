@@ -220,7 +220,7 @@ orbital_dict = {
                 }
 
 def get_dos(index_list):
-    orbital_dict = {'s': [], 'p': [], 'd':[]}
+    # orbital_dict = {'s': [], 'p': [], 'd':[]}
     dos_up_all, dos_dn_all = [], []
     for i in index_list:
         assert os.path.exists('DOS'+str(i)), 'DOS'+str(i)+" not found."
