@@ -15,7 +15,8 @@ pip install zjpf
 ```
 
 # Install from the source (latest version)
-- Download the source code: [download](https://github.com/jzhang-github/PyFunction/archive/refs/heads/main.zip)  
+- Download the source code: [download](https://github.com/jzhang-github/PyFunction/archive/refs/heads/main.zip)
+- Unzip `PyFunction-main.zip`  
 - ```console
    python setup.py build
    python setup.py install
