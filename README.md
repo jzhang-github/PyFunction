@@ -6,15 +6,15 @@ Useful Python functions.
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/zjpf)](https://pypi.org/project/zjpf/)
 [![PyPI - Wheel](https://img.shields.io/pypi/wheel/zjpf)](https://pypi.org/project/zjpf/)
 
-# PyPi
+## PyPi
 **Z**HANG **J**un **P**ython **f**unctions ([zjpf](https://pypi.org/project/zjpf/)).
 
-# Install
+## Install
 ```console
 pip install zjpf
 ```
 
-# Install from the source (latest version)
+## Install from the source (latest version)
 - Download the source code: [download](https://github.com/jzhang-github/PyFunction/archive/refs/heads/main.zip)
 - Unzip `PyFunction-main.zip`  
 - ```console
@@ -22,7 +22,7 @@ pip install zjpf
    python setup.py install
    ```
 
-# Use this repo
+## Use this repo
 ```python
 import zjpf as pf
 print(dir(pf))
