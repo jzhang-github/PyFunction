@@ -4,6 +4,7 @@ import os
 from scipy.interpolate import RegularGridInterpolator as RGI
 import ase
 from ase.formula import Formula
+import re
 
 def read_chg(CHG_NAME='CHGCAR'):
     infile=open(CHG_NAME,"r")
@@ -310,20 +311,23 @@ LELF
 MDALGO
 '''.split()
 
-def modify_INCAR(key='NSW', value='300', s=''):
+def modify_INCAR(working_dir='.', key='NSW', value='300', s=''):
     if not key in INCAR_TAG:
         print('Input key not avaliable, please check.')
         return 1
 
     new_incar, discover_code = [], False
-    with open('INCAR', 'r') as f:
+    with open(os.path.join(working_dir, 'INCAR'), 'r') as f:
         for line in f:
-            str_list = line.split()
+            # str_list = line.split()
+            str_list = re.split(' |#|=', line)
+            str_list = [x for x in str_list if x != '']
             if len(str_list) == 0:
                 new_incar.append('\n')
             elif str_list[0] == key:
-                str_list[2] = value
-                new_incar.append(f'  {str_list[0]} = {str_list[2]}\n')
+            # elif key in str_list:
+                str_list[1] = value
+                new_incar.append(f'  {str_list[0]} = {str_list[1]}\n')
                 discover_code = True
             else:
                 new_incar.append(line)
@@ -334,7 +338,7 @@ def modify_INCAR(key='NSW', value='300', s=''):
     if not discover_code:
         new_incar.append(f'  {key} = {value}\n')
 
-    with open('INCAR', 'w') as f:
+    with open(os.path.join(working_dir, 'INCAR'), 'w') as f:
         for line in new_incar:
             f.write(line)
 
