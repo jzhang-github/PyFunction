@@ -309,6 +309,8 @@ NEDOS
 IVDW
 LELF
 MDALGO
+TEEND
+SMASS
 '''.split()
 
 def modify_INCAR(working_dir='.', key='NSW', value='300', s=''):
