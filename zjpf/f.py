@@ -327,9 +327,10 @@ def modify_INCAR(working_dir='.', key='NSW', value='300', s=''):
             if len(str_list) == 0:
                 new_incar.append('\n')
             elif str_list[0] == key:
-            # elif key in str_list:
-                str_list[1] = value
-                new_incar.append(f'  {str_list[0]} = {str_list[1]}\n')
+                if value == '#':
+                    new_incar.append(f'  # {str_list[0]} = {str_list[1]}\n')
+                else:
+                    new_incar.append(f'  {str_list[0]} = {value}\n')
                 discover_code = True
             else:
                 new_incar.append(line)
