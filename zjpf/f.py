@@ -1,6 +1,7 @@
 import numpy as np
 import math
 import os
+from datetime import datetime
 from scipy.interpolate import RegularGridInterpolator as RGI
 import ase
 from ase.formula import Formula
@@ -365,3 +366,6 @@ def get_density(fname='POSCAR'):
     density = total_mass / vol # unit: kg/m^3
     density1 = density * 0.001 # unit: g/cm^3
     return density, density1
+
+def time():
+    return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
