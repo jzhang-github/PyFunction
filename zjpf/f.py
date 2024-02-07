@@ -369,3 +369,12 @@ def get_density(fname='POSCAR'):
 
 def time():
     return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
+def is_vasp_completed(fname='OUTCAR'):
+    if not os.path.exists(fname):
+        return False
+    with open(fname, 'r') as f:
+        f.seek(0, os.SEEK_END)
+        f.seek(f.tell() - 13000, os.SEEK_SET)
+        lines = f.readlines()
+        return ' reached required accuracy - stopping structural energy minimisation\n' in lines
