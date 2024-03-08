@@ -4,7 +4,9 @@ import os
 from datetime import datetime
 from scipy.interpolate import RegularGridInterpolator as RGI
 import ase
+from ase.io import read
 from ase.formula import Formula
+from ase.data import covalent_radii, atomic_numbers
 import re
 
 def read_chg(CHG_NAME='CHGCAR'):
@@ -378,3 +380,46 @@ def is_vasp_completed(fname='OUTCAR'):
         f.seek(f.tell() - 13000, os.SEEK_SET)
         lines = f.readlines()
         return ' reached required accuracy - stopping structural energy minimisation\n' in lines
+
+def scale_atoms(atoms, scale_factor=1.0):
+    calculator = atoms.get_calculator()
+    new_atoms  = atoms.copy()
+    new_atoms.set_calculator(calculator)
+    cell        = new_atoms.get_cell()
+    frac_coords = new_atoms.get_scaled_positions()
+    new_cell    = cell * scale_factor
+    new_atoms.set_cell(new_cell)
+    new_atoms.set_scaled_positions(frac_coords)
+    return new_atoms
+
+def get_ase_atom_from_formula_template(chemical_formula, v_per_atom=None,
+                                       template_file='POSCAR'):
+    # interpret formula
+    # the template file should be a bulk structure
+    atomic_fracions    = get_concentration_from_ase_formula(chemical_formula)
+    elements           = [x for x in atomic_fracions]
+    element_number     = [atomic_numbers[x] for x in elements]
+    atoms              = read(template_file)
+    total_atom         = len(atoms)
+    num_atom_list      = np.array(list(atomic_fracions.values())) * total_atom
+    num_atom_list      = np.around(num_atom_list, decimals=0)
+    total_tmp          = np.sum(num_atom_list)
+    deviation          = total_atom - total_tmp
+    num_atom_list[np.random.randint(len(elements))] += deviation
+
+    # shuffle atoms
+    ase_number    = []
+    for i_index, i in enumerate(num_atom_list):
+        for j in range(int(i)):
+            ase_number.append(element_number[i_index])
+    np.random.shuffle(ase_number)
+    atoms.set_atomic_numbers(ase_number)
+
+    # scale atoms
+    if isinstance(v_per_atom, (float, int)):
+        volume = atoms.cell.volume
+        volume_per_atom = volume / len(atoms)
+        volume_ratio = v_per_atom / volume_per_atom
+        scale_factor = pow(volume_ratio, 1/3)
+        atoms = scale_atoms(atoms, scale_factor)
+    return atoms
