@@ -1,0 +1,4 @@
+# .gitignore file
+zjpf/__pycache__
+not_used/
+not_used/*

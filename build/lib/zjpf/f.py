@@ -411,8 +411,6 @@ def get_ase_atom_from_formula_template(chemical_formula, v_per_atom=None,
     excluded_element_numbers = [atomic_numbers[x] for x in exclude_shuffle_elements]
 
     # shuffle atoms
-    # if you do not want to shuffle some elements, put them in `exclude_shuffle_elements`
-    # note that the unshuffled atoms are not controled by the template.
     ase_number = []
     shuffle_mask = []
     for i_index, i in enumerate(num_atom_list):
@@ -421,8 +419,7 @@ def get_ase_atom_from_formula_template(chemical_formula, v_per_atom=None,
             shuffle_mask.append(element_number[i_index] not in excluded_element_numbers)
 
     ase_number_need_shuffle = [x for i, x in enumerate(ase_number) if shuffle_mask[i]]
-    np.random.shuffle(ase_number_need_shuffle)
-
+    ase_number_need_shuffle = np.random.shuffle(ase_number_need_shuffle)
     ase_number_no_shuffle = [x for i, x in enumerate(ase_number) if not shuffle_mask[i]]
 
     ase_number = []
