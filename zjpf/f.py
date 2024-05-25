@@ -442,3 +442,7 @@ def get_ase_atom_from_formula_template(chemical_formula, v_per_atom=None,
         scale_factor = pow(volume_ratio, 1/3)
         atoms = scale_atoms(atoms, scale_factor)
     return atoms
+
+def get_ase_atom_from_formula_template(file_name='POSCAR'):
+    atoms = read(file_name)
+    return atoms.get_chemical_formula()
