@@ -8,6 +8,7 @@ from ase.io import read
 from ase.formula import Formula
 from ase.data import covalent_radii, atomic_numbers
 import re
+import pandas as pd
 
 def read_chg(CHG_NAME='CHGCAR'):
     infile=open(CHG_NAME,"r")
@@ -236,6 +237,9 @@ def get_dos(index_list):
     dos_dn = np.sum(dos_dn_all, axis=0)
     dos    = np.array([energy, dos_up, dos_dn])
     return dos
+
+def remove_pd_outlier(df: pd.core.frame.DataFrame, level=3) -> pd.core.frame.DataFrame:
+    return df[(np.abs(stats.zscore(df, nan_policy='omit')) < level)]
 
 INCAR_TAG = '''
 SYSTEM
