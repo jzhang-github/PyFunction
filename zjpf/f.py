@@ -3,6 +3,7 @@ import math
 import os
 from datetime import datetime
 from scipy.interpolate import RegularGridInterpolator as RGI
+from scipy import stats
 import ase
 from ase.io import read
 from ase.formula import Formula
