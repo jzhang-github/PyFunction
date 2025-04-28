@@ -398,14 +398,17 @@ def scale_atoms(atoms, scale_factor=1.0):
     return new_atoms
 
 def get_ase_atom_from_formula_template(chemical_formula, v_per_atom=None,
-                                       template_file='POSCAR',
+                                       template='POSCAR',
                                        exclude_shuffle_elements=[]):
     # interpret formula
     # the template file should be a bulk structure
     atomic_fracions    = get_concentration_from_ase_formula(chemical_formula)
     elements           = [x for x in atomic_fracions]
     element_number     = [atomic_numbers[x] for x in elements]
-    atoms              = read(template_file)
+    if isinstance(template, ase.atoms.Atoms):
+        atoms = template
+    elif isinstance(template, str):
+        atoms              = read(template)
     total_atom         = len(atoms)
     num_atom_list      = np.array(list(atomic_fracions.values())) * total_atom
     num_atom_list      = np.around(num_atom_list, decimals=0)
