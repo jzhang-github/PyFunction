@@ -237,7 +237,7 @@ def get_dos(index_list):
     dos_up = np.sum(dos_up_all, axis=0)
     dos_dn = np.sum(dos_dn_all, axis=0)
     dos    = np.array([energy, dos_up, dos_dn])
-    return dos
+    return dos.T
 
 def remove_pd_outlier(df: pd.core.frame.DataFrame, level=3) -> pd.core.frame.DataFrame:
     return df[(np.abs(stats.zscore(df, nan_policy='omit')) < level)]
