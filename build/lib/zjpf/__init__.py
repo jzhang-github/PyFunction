@@ -12,4 +12,7 @@ from .f import read_chg, flatten_new, fractional2cartesian, cartesian2fractional
 from .f import get_concentration_from_ase_formula, get_dos
 
 from .f import get_ase_atom_from_formula_template, scale_atoms
+
+from .f import remove_pd_outlier
+
 # remove redundant variables from the global memory.

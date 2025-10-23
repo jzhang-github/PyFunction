@@ -3,11 +3,13 @@ import math
 import os
 from datetime import datetime
 from scipy.interpolate import RegularGridInterpolator as RGI
+from scipy import stats
 import ase
 from ase.io import read
 from ase.formula import Formula
 from ase.data import covalent_radii, atomic_numbers
 import re
+import pandas as pd
 
 def read_chg(CHG_NAME='CHGCAR'):
     infile=open(CHG_NAME,"r")
@@ -235,7 +237,10 @@ def get_dos(index_list):
     dos_up = np.sum(dos_up_all, axis=0)
     dos_dn = np.sum(dos_dn_all, axis=0)
     dos    = np.array([energy, dos_up, dos_dn])
-    return dos
+    return dos.T
+
+def remove_pd_outlier(df: pd.core.frame.DataFrame, level=3) -> pd.core.frame.DataFrame:
+    return df[(np.abs(stats.zscore(df, nan_policy='omit')) < level)]
 
 INCAR_TAG = '''
 SYSTEM
@@ -393,14 +398,17 @@ def scale_atoms(atoms, scale_factor=1.0):
     return new_atoms
 
 def get_ase_atom_from_formula_template(chemical_formula, v_per_atom=None,
-                                       template_file='POSCAR',
+                                       template='POSCAR',
                                        exclude_shuffle_elements=[]):
     # interpret formula
     # the template file should be a bulk structure
     atomic_fracions    = get_concentration_from_ase_formula(chemical_formula)
     elements           = [x for x in atomic_fracions]
     element_number     = [atomic_numbers[x] for x in elements]
-    atoms              = read(template_file)
+    if isinstance(template, ase.atoms.Atoms):
+        atoms = template
+    elif isinstance(template, str):
+        atoms              = read(template)
     total_atom         = len(atoms)
     num_atom_list      = np.array(list(atomic_fracions.values())) * total_atom
     num_atom_list      = np.around(num_atom_list, decimals=0)
@@ -442,3 +450,7 @@ def get_ase_atom_from_formula_template(chemical_formula, v_per_atom=None,
         scale_factor = pow(volume_ratio, 1/3)
         atoms = scale_atoms(atoms, scale_factor)
     return atoms
+
+def get_ase_atom_from_formula_template(file_name='POSCAR'):
+    atoms = read(file_name)
+    return atoms.get_chemical_formula()
