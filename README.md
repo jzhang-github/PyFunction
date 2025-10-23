@@ -18,8 +18,7 @@ pip install zjpf
 - Download the source code: [download](https://github.com/jzhang-github/PyFunction/archive/refs/heads/main.zip)
 - Unzip `PyFunction-main.zip`  
 - ```console
-   python setup.py build
-   python setup.py install
+   pip install .
    ```
 
 ## Use this repo
