@@ -1,9 +1,8 @@
-import numpy as np
 import math
 import os
 from datetime import datetime
-from scipy.interpolate import RegularGridInterpolator as RGI
-from scipy import stats
+import numpy as np
+
 import ase
 from ase.io import read
 from ase.formula import Formula
@@ -12,6 +11,7 @@ import re
 import pandas as pd
 
 def read_chg(CHG_NAME='CHGCAR'):
+    from scipy.interpolate import RegularGridInterpolator as RGI
     infile=open(CHG_NAME,"r")
     #outfile1=open("mytot","w")
     #outfile2=open("mymag","w")
@@ -240,6 +240,7 @@ def get_dos(index_list):
     return dos.T
 
 def remove_pd_outlier(df: pd.core.frame.DataFrame, level=3) -> pd.core.frame.DataFrame:
+    from scipy import stats
     return df[(np.abs(stats.zscore(df, nan_policy='omit')) < level)]
 
 INCAR_TAG = '''
