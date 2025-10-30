@@ -19,8 +19,8 @@ with open("README.md", "r", encoding='utf-8') as f:
 # long_description = (this_directory / "README.md").read_text()
 
 setup(name='zjpf',
-      version='0.0.5',
-      python_requires='>=3.1',
+      version='0.0.6',
+      python_requires='>=3.8',
       description='ZHANG Jun Python functions.',
       long_description=long_description,
       include_package_data=True,
